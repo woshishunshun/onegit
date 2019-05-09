@@ -28,7 +28,7 @@ namespace Month06YueKaoMVC.Controllers
             ViewBag.dz = list1;
             return View();
         }
-        //第一级菜单
+        //第一级菜单QSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
         public string GetS()
         {            
             var list = Hctp.GetApi("get", "getList");
