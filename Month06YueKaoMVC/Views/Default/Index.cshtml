@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+ 
+<h2>Index</h2>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+
+<div>
+      <p>欢迎您，尊敬的用户</p>
+      <p></p>
+      <p></p>
+      <p></p>
+     
+    <p>您当前的ip为 ：@ViewBag.sl</p>
+    <p>该IP的所在地为 ：@ViewBag.dz</p>
+
+</div>
+<select id="s" onchange="ErJI()">
+      <option>请选择</option>
+</select>
+<select id="erji" onchange="SanJI()">
+    <option>请选择</option>
+</select>
+<select id="sanji">
+    <option>请选择</option>
+</select>
+<br />
+<input id="Button1" type="button" value="提交更改信息" onclick="AddGG()" />
+
+
+<script>
+    $(function () {
+        FirstS();
+    })
+    function FirstS() {
+        $.ajax({
+            url: "/Default/GetS",
+            dataType: "json",
+            type: "get",
+            success: function (d) {
+         
+                $(d).each(function () {
+                    var str = "<option value='" + this.Id + "'>" + this.Name + "</option>";
+                    $("#s").append(str);
+                })
+            }
+        })
+    }
+    function ErJI() {
+        var i = $("#s").val();
+        $.ajax({
+            url: "/Default/GetErSanJI?id=" + i,
+            dataType: "json",
+            type: "get",
+            success: function (d) {
+                $("#erji").empty().append("<option>请选择</option>")
+                $("#sanji").empty().append("<option>请选择</option>")
+                $(d).each(function () {
+                    var str = "<option value='" + this.Id + "'>" + this.Name + "</option>";
+                    $("#erji").append(str);
+                })
+            }
+        })
+    }
+    function SanJI() {
+        var i = $("#erji").val();
+        $.ajax({
+            url: "/Default/GetErSanJI?id=" + i,
+            dataType: "json",
+            type: "get",
+            success: function (d) {
+                $("#sanji").empty().append("<option>请选择</option>")
+                $(d).each(function () {
+                    var str = "<option value='" + this.Id + "'>" + this.Name + "</option>";
+                    $("#sanji").append(str);
+                })
+            }
+        })
+    }
+
+    function AddGG() {
+        var one = $("#s").val();
+        var two = $("#erji").val();
+        var three = $("#sanji").val();
+        $.ajax({
+            url: "/Default/AddAdre?one=" + one + "&two=" + two + "&three=" + three,
+            type: "get",
+            success: function (data) {
+                if (parseInt(data) > 0) {
+                    alert("添加成功");
+                    location.reload();
+                }
+                else {
+                    alert("添加失败");
+                    location.reload();
+                }
+            }
+        })
+    }
+</script>
